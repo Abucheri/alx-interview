@@ -17,7 +17,7 @@ def canUnlockAll(boxes):
     """
     if not boxes or not isinstance(boxes, list):
         return False
-    
+
     # Initialize a set to keep track of visited boxes
     visited = set()
 
