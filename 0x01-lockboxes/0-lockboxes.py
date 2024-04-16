@@ -15,26 +15,23 @@ def canUnlockAll(boxes):
     Returns:
         bool: True if all boxes can be opened, False otherwise.
     """
-    if not boxes or not isinstance(boxes, list):
-        return False
+    if (len(boxes) == 0):
+        return True
 
-    # Initialize a set to keep track of visited boxes
     visited = set()
+    queue = set(boxes[0])
 
-    # Initialize a queue with the first box (index 0)
-    queue = [0]
+    while (len(queue)):
+        visited = visited | queue
+        queue = set()
 
-    # Start BFS traversal
-    while queue:
-        current_box = queue.pop(0)
-        visited.add(current_box)
+        if (visited & set(range(1, len(boxes))) == set(range(1, len(boxes)))):
+            return True
 
-        # Check keys in the current box
-        for key in boxes[current_box]:
-            # If the key opens a new box and it hasn't been visited yet,
-            # add it to the queue
-            if key < len(boxes) and key not in visited:
-                queue.append(key)
+        for k in visited:
+            if (k < len(boxes)):
+                for new_key in boxes[k]:
+                    if new_key not in visited:
+                        queue.add(new_key)
 
-    # If all boxes have been visited, return True
-    return len(visited) == len(boxes)
+    return False
