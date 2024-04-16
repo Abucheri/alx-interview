@@ -6,41 +6,41 @@ For this project, you will need a solid understanding of several key concepts in
 
 ### Concepts Needed:
 
-	1. ***Lists and List Manipulation***:
+1. ***Lists and List Manipulation***:
 
-		- Understanding how to work with lists, including accessing elements, iterating over lists, and modifying lists dynamically.
-		- [Python Lists (Python Official Documentation)](https://docs.python.org/3/tutorial/datastructures.html 'Python Lists (Python Official Documentation)')
+	- Understanding how to work with lists, including accessing elements, iterating over lists, and modifying lists dynamically.
+	- [Python Lists (Python Official Documentation)](https://docs.python.org/3/tutorial/datastructures.html 'Python Lists (Python Official Documentation)')
 
-	2. ***Graph Theory Basics***:
+2. ***Graph Theory Basics***:
 
-		- Although not explicitly required, knowledge of graph theory (especially concepts related to traversal algorithms like Depth-First Search or Breadth-First Search) can be very helpful in solving this problem, as the boxes and keys can be thought of as nodes and edges in a graph.
-		- [Graph Theory (Khan Academy)](https://www.khanacademy.org/computing/computer-science/algorithms/graph-representation/a/representing-graphs 'Graph Theory (Khan Academy)')
+	- Although not explicitly required, knowledge of graph theory (especially concepts related to traversal algorithms like Depth-First Search or Breadth-First Search) can be very helpful in solving this problem, as the boxes and keys can be thought of as nodes and edges in a graph.
+	- [Graph Theory (Khan Academy)](https://www.khanacademy.org/computing/computer-science/algorithms/graph-representation/a/representing-graphs 'Graph Theory (Khan Academy)')
 
-	3. ***Algorithmic Complexity***:
+3. ***Algorithmic Complexity***:
 
-		- Understanding the time and space complexity of your solution is important, as it can help in writing more efficient algorithms.
-		- [Big O Notation (GeeksforGeeks)](https://www.geeksforgeeks.org/asymptotic-notation-and-analysis-based-on-input-size-of-algorithms/ 'Big O Notation (GeeksforGeeks)')
+	- Understanding the time and space complexity of your solution is important, as it can help in writing more efficient algorithms.
+	- [Big O Notation (GeeksforGeeks)](https://www.geeksforgeeks.org/asymptotic-notation-and-analysis-based-on-input-size-of-algorithms/ 'Big O Notation (GeeksforGeeks)')
 
-	4. ***Recursion***:
+4. ***Recursion***:
 
-		- Some solutions might require a recursive approach to traverse through the boxes and keys.
-		- [Recursion in Python (Real Python)](https://realpython.com/python-recursion/ 'Recursion in Python (Real Python)')
+	- Some solutions might require a recursive approach to traverse through the boxes and keys.
+	- [Recursion in Python (Real Python)](https://realpython.com/python-recursion/ 'Recursion in Python (Real Python)')
 
-	5. ***Queue and Stack***:
+5. ***Queue and Stack***:
 
-		- Knowing how to use queues and stacks is crucial if implementing a breadth-first search (BFS) or depth-first search (DFS) algorithm to traverse through the keys and boxes.
-		- [Python Queue and Stack (GeeksforGeeks)](https://www.geeksforgeeks.org/queue-in-python/ 'Python Queue and Stack (GeeksforGeeks)')
+	- Knowing how to use queues and stacks is crucial if implementing a breadth-first search (BFS) or depth-first search (DFS) algorithm to traverse through the keys and boxes.
+	- [Python Queue and Stack (GeeksforGeeks)](https://www.geeksforgeeks.org/queue-in-python/ 'Python Queue and Stack (GeeksforGeeks)')
 
-	6. ***Set Operations***:
+6. ***Set Operations***:
 
-		- Understanding how to use sets for keeping track of visited boxes and available keys can optimize the search process.
-		- [Python Sets (Python Official Documentation)](https://docs.python.org/3/tutorial/datastructures.html#sets 'Python Sets (Python Official Documentation)')
+	- Understanding how to use sets for keeping track of visited boxes and available keys can optimize the search process.
+	- [Python Sets (Python Official Documentation)](https://docs.python.org/3/tutorial/datastructures.html#sets 'Python Sets (Python Official Documentation)')
 
 By reviewing these concepts and utilizing these resources, you will be well-equipped to develop an efficient solution for this project, applying both your algorithmic thinking and Python programming skills.
 
 ## Additional Resources
 
-	- [Mock Technical Interview](https://www.youtube.com/watch?v=V8DGdPkBBxg 'Mock Technical Interview')
+- [Mock Technical Interview](https://www.youtube.com/watch?v=V8DGdPkBBxg 'Mock Technical Interview')
 
 ## Tasks
 
