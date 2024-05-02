@@ -1,57 +1,49 @@
 #!/usr/bin/python3
 
+
 import sys
 
 
 if __name__ == "__main__":
     # Initialize variables to store metrics
-    file_size = 0
-    status_codes = {}
-    codes_list = [
-        "200", "301", "400", "401", "403", "404", "405", "500"]
+    status_code_counts = {
+        "200": 0,
+        "301": 0,
+        "400": 0,
+        "401": 0,
+        "403": 0,
+        "404": 0,
+        "405": 0,
+        "500": 0
+    }
+    line_count = 1
+    total_file_size = 0
 
-    for status in codes_list:
-        status_codes[status] = 0
+    def parse_line(args):
+        """read abd get data"""
+        try:
+            parsed_line = args.split()
+            status_code = parsed_line[-2]
+            if status_code in status_code_counts.keys():
+                status_code_counts[status_code] += 1
+            return int(parsed_line[-1])
+        except Exception:
+            return 0
 
-    line_count = 0
+    def print_statistics():
+        """Prints current totals of file size and status code counts."""
+        print("File size: {}".format(total_file_size))
+        for key in sorted(status_code_counts.keys()):
+            if status_code_counts[key]:
+                print("{}: {}".format(key, status_code_counts[key]))
 
     try:
         for line in sys.stdin:
-            try:
-                inputs = line.split(" ")
-                if len(inputs) != 9:
-                    pass
-
-                if inputs[-2] in codes_list:
-                    status_codes[inputs[-2]] += 1
-
-                if inputs[-1][-1] == '\n':
-                    inputs[-1][:-1]
-
-                file_size += int(inputs[-1])
-            except Exception:
-                pass
-
-            line_count += 1
-
+            total_file_size += parse_line(line)
             if line_count % 10 == 0:
-                print("File size: {}".format(file_size))
-                for status in sorted(status_codes.keys()):
-                    if status_codes[status] != 0:
-                        print("{}: {}".format(status, status_codes[status]))
-
-        print("File size: {}".format(file_size))
-
-        for status in sorted(status_codes.keys()):
-            if status_codes[status] != 0:
-                print("{}: {}".format(status, status_codes[status]))
-
-    except KeyboardInterrupt as e:
-        # Handle keyboard interruption (CTRL + C)
-        print("File size: {}".format(file_size))
-
-        for status in sorted(status_codes.keys()):
-            if status_codes[status] != 0:
-                print("{}: {}".format(status, status_codes[status]))
+                print_statistics()
+            line_count += 1
+    except KeyboardInterrupt:
+        print_statistics()
         raise
-    print("{}: {}".format(status, status_codes[status]))
+    print_statistics()
