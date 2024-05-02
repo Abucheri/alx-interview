@@ -1,58 +1,68 @@
 #!/usr/bin/python3
 
-import sys
-import re
-from collections import OrderedDict
-from datetime import datetime
 
-
-# Initialize variables to store metrics
-total_file_size = 0
-status_code_counts = OrderedDict.fromkeys(
-        [200, 301, 400, 401, 403, 404, 405, 500], 0)
-line_count = 0
-
-
-def print_statistics():
+def print_statistics(total_file_size, code_counts):
     """Prints current totals of file size and status code counts."""
     print("File size:", total_file_size)
-    for code, count in status_code_counts.items():
-        if count > 0:
-            print("{}: {}".format(code, count))
+    for code in code_counts:
+        if code_counts[code] > 0:
+            print("{}: {}".format(code, code_counts[code]))
 
 
-try:
-    for line in sys.stdin:
-        line_count += 1
+if __name__ == "__main__":
+    from sys import argv, stdin, stderr
+    from collections import OrderedDict
+    from datetime import datetime
 
-        # Parse log entry using regular expression
-        match = re.match(r'^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}) - \[(.*?)\]'
-                         r'"GET /projects/260 HTTP/1\.1" (\d+) (\d+)$',
-                         line.strip())
-        if match:
-            # Extract relevant information from the log entry
-            ip_address, timestamp, status_code, file_size = match.groups()
+    # Initialize variables to store metrics
+    total_file_size = 0
+    status_code_counts = OrderedDict.fromkeys([200, 301, 400, 401, 403,
+                                              404, 405, 500], 0)
+    line_count = 0
+
+    try:
+        for line in stdin:
+            line_count += 1
+
+            line_input = line.split('-', 1)
+            if len(line_input) != 2:
+                continue
 
             # Check timestamp format
+            time_format = line_input[1].split(']')
+            time_code = time_format[0].lstrip(' [')
             try:
-                datetime.strptime(timestamp, '%Y-%m-%d %H:%M:%S.%f')
+                datetime.strptime(time_code, '%Y-%m-%d %H:%M:%S.%f')
             except ValueError:
-                sys.stderr.write("{}: {}: invalid timestamp format\n"
-                                 .format(sys.argv[0], line_count))
+                stderr.write("{}: {}: invalid timecode\n".format(
+                             argv[0], line_count))
+                pass
 
             # Check URL
-            if status_code != '200':
-                sys.stderr.write("{}: {}: unexpected HTTP status code\n"
-                                 .format(sys.argv[0], line_count))
+            url_check = time_format[1].split('"')
+            url_check = url_check[1:]
+            if url_check[0] != 'GET /projects/260 HTTP/1.1':
+                stderr.write("{}: {}: unexpected HTTP request\n".format(
+                             argv[0], line_count))
 
             # Update metrics
-            total_file_size += int(file_size)
-            status_code = int(status_code)
-            if status_code in status_code_counts:
+            metrics = url_check[1].lstrip(' ')
+            metrics = metrics.rstrip('\n')
+            metrics = metrics.split(' ')
+
+            # Check status codes
+            if metrics[0].isdecimal():
+                status_code = int(metrics[0])
                 status_code_counts[status_code] += 1
 
+            # Check file size
+            if metrics[1].isdecimal():
+                total_file_size += int(metrics[1])
+
             if line_count % 10 == 0:
-                print_statistics()
-except KeyboardInterrupt:
-    # Handle keyboard interruption (CTRL + C)
-    print_statistics()
+                print_statistics(total_file_size, status_code_counts)
+        print_statistics(total_file_size, status_code_counts)
+    except (KeyboardInterrupt):
+        # Handle keyboard interruption (CTRL + C)
+        print_statistics(total_file_size, status_code_counts)
+        raise
