@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from sys import stdin
+import sys
 
 
 if __name__ == "__main__":
@@ -16,7 +16,7 @@ if __name__ == "__main__":
     line_count = 0
 
     try:
-        for line in stdin:
+        for line in sys.stdin:
             try:
                 inputs = line.split(" ")
                 if len(inputs) != 9:
