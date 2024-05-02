@@ -29,7 +29,7 @@ if __name__ == "__main__":
                     inputs[-1][:-1]
 
                 file_size += int(inputs[-1])
-            except ValueError:
+            except:
                 pass
 
             line_count += 1
@@ -46,7 +46,7 @@ if __name__ == "__main__":
             if status_codes[status] != 0:
                 print("{}: {}".format(status, status_codes[status]))
 
-    except KeyboardInterrupt:
+    except KeyboardInterrupt as e:
         # Handle keyboard interruption (CTRL + C)
         print("File size: {}".format(file_size))
 
