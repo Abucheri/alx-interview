@@ -54,3 +54,4 @@ if __name__ == "__main__":
             if status_codes[status] != 0:
                 print("{}: {}".format(status, status_codes[status]))
         raise
+    print("{}: {}".format(status, status_codes[status]))
