@@ -29,7 +29,7 @@ if __name__ == "__main__":
                     inputs[-1][:-1]
 
                 file_size += int(inputs[-1])
-            except:
+            except Exception:
                 pass
 
             line_count += 1
