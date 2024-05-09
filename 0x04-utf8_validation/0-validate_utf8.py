@@ -12,7 +12,7 @@ def validUTF8(data):
         data: A list of integers representing byte data.
 
     Returns:
-        boolean: True if data is a valid UTF-8 encoding, else returns False
+        True if data is a valid UTF-8 encoding, else returns False
     """
     # Check if data is a list
     if not isinstance(data, list):
