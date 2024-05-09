@@ -14,6 +14,14 @@ def validUTF8(data):
     Returns:
         boolean: True if data is a valid UTF-8 encoding, else returns False
     """
+    # Check if data is a list
+    if not isinstance(data, list):
+        return False
+
+    # Check if all elements in data are integers
+    if not all(isinstance(byte, int) for byte in data):
+        return False
+
     # Number of bytes in the current UTF-8 character
     num_bytes = 0
 
