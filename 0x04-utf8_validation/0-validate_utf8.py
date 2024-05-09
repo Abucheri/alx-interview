@@ -26,21 +26,20 @@ def validUTF8(data):
     num_bytes = 0
 
     for byte in data:
-        # If it's the start of a new character
+        bit = 1 << 7
         if num_bytes == 0:
             # Count the number of bytes in this UTF-8 character
-            if byte >> 3 == 0b11110:
-                num_bytes = 3
-            elif byte >> 4 == 0b1110:
-                num_bytes = 2
-            elif byte >> 5 == 0b110:
-                num_bytes = 1
-            elif byte >> 7 == 1:
+            while (bit & byte):
+                num_bytes += 1
+                bit = bit >> 1
+            if num_bytes == 0:
+                continue
+            if num_bytes == 1 or num_bytes > 4:
                 return False
         else:
             # If it's a continuation byte
-            if byte >> 6 != 0b10:
+            if not (byte & (1 << 7) and not (byte & (1 << 6))):
                 return False
-            num_bytes -= 1
+        num_bytes -= 1
     # If there are remaining bytes left
     return num_bytes == 0
