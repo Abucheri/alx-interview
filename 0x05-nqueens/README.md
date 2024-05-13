@@ -34,6 +34,11 @@ By studying these concepts and utilizing the resources provided, you will be equ
 
 0. N queens
 
+	![Judit-photo1_602x433](https://github.com/Abucheri/alx-interview/assets/24778489/4ba0e704-3ba7-40c5-b9a1-7f0d04f2d53c)
+
+	*Chess grandmaster [Judit Polgár](https://en.wikipedia.org/wiki/Judit_Polg%C3%A1r), the strongest female chess player of all time*
+
+
 	- The N queens puzzle is the challenge of placing N non-attacking queens on an N×N chessboard. Write a program that solves the N queens problem.
 
 		- Usage: `nqueens N` 
