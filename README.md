@@ -6,3 +6,4 @@
 03. [0x03. Log Parsing](./0x03-log_parsing 'Log Parsing')
 04. [0x04. UTF-8 Validation](./0x04-utf8_validation/ 'UTF8 Validation')
 05. [0x05. N Queens](./0x05-nqueens 'N Queens')
+06. [0x06. Star Wars API](./0x06-starwars_api 'Starwars API')
