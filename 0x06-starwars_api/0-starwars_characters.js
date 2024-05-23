@@ -9,14 +9,14 @@ if (!movieId) {
   process.exit(1);
 }
 
-request(apiUrl, (error, response, body) => {
+request(apiUrl, async (error, response, body) => {
   if (error) {
-    console.error(error);
+    console.error('Error fetching movie data:', error);
     process.exit(1);
   }
 
   if (response.statusCode !== 200) {
-    console.error(response.statusCode);
+    console.error('Failed to fetch movie data. Status code:', response.statusCode);
     process.exit(1);
   }
 
@@ -28,20 +28,25 @@ request(apiUrl, (error, response, body) => {
     process.exit(1);
   }
 
-  characters.forEach((characterUrl) => {
-    request(characterUrl, (error, response, body) => {
-      if (error) {
-        console.error(error);
-        return;
-      }
+  for (const characterUrl of characters) {
+    await new Promise((resolve, reject) => {
+      request(characterUrl, (error, response, body) => {
+        if (error) {
+          console.error('Error fetching character data:', error);
+          reject(error);
+          return;
+        }
 
-      if (response.statusCode !== 200) {
-        console.error(response.statusCode);
-        return;
-      }
+        if (response.statusCode !== 200) {
+          console.error('Failed to fetch character data. Status code:', response.statusCode);
+          reject(new Error(`Status code: ${response.statusCode}`));
+          return;
+        }
 
-      const characterData = JSON.parse(body);
-      console.log(characterData.name);
+        const characterData = JSON.parse(body);
+        console.log(characterData.name);
+        resolve();
+      });
     });
-  });
+  }
 });
