@@ -20,20 +20,21 @@ def makeChange(coins, total):
     if total <= 0:
         return 0
 
-    newValue = total + 1
-    stored = {0: 0}
-
-    for num in range(1, total + 1):
-        stored[num] = newValue
-
-        for coin in coins:
-            current = num - coin
-            if current < 0:
-                continue
-
-            stored[num] = min(stored[current] + 1, stored[num])
-
-    if stored[total] == total + 1:
+    if len(coins) == 0:
         return -1
 
-    return stored[total]
+    coins = sorted(coins)
+    dm = [float('inf')] * (total + 1)
+    dm[0] = 0
+
+    for num in range(total + 1):
+        for coin in coins:
+            if coin > num:
+                break
+            if dm[num - coin] != -1:
+                dm[num] = min(dm[num - coin] + 1, dm[num])
+
+    if dm[total] == float('inf'):
+        return -1
+
+    return dm[total]
