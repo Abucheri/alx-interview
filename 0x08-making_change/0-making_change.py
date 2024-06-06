@@ -26,9 +26,9 @@ def makeChange(coins, total):
     # Base case: no coins are needed to make 0 amount
     dp[0] = 0
 
-    for amount in range(1, total + 1):
-        for coin in coins:
-            if coin <= amount:
+    for coin in coins:
+        for amount in range(coin, total + 1):
+            if dp[amount - coin] != float('inf'):
                 dp[amount] = min(dp[amount], dp[amount - coin] + 1)
 
     return dp[total] if dp[total] != float('inf') else -1
