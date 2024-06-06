@@ -20,21 +20,25 @@ def makeChange(coins, total):
     if total <= 0:
         return 0
 
-    if len(coins) == 0:
+    if type(total) is not int or type(coins) is not list or not all(
+            [type(coin) is int for coin in coins]):
+        print("Invalid args")
+        return 0
+
+    coins.sort(reverse=True)
+
+    total_coins = 0
+    rem = total
+
+    for dm in coins:
+        if dm <= rem:
+            current = rem // dm
+            total_coins += current
+            rem -= current * dm
+        if rem == 0:
+            break
+
+    if total_coins == 0 or rem != 0:
         return -1
 
-    coins = sorted(coins)
-    dm = [float('inf')] * (total + 1)
-    dm[0] = 0
-
-    for num in range(total + 1):
-        for coin in coins:
-            if coin > num:
-                break
-            if dm[num - coin] != -1:
-                dm[num] = min(dm[num - coin] + 1, dm[num])
-
-    if dm[total] == float('inf'):
-        return -1
-
-    return dm[total]
+    return total_coins
