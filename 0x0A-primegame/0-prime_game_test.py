@@ -79,7 +79,5 @@ def isWinner(x, nums):
         return None
     elif Maria_wins > Ben_wins:
         return "Maria"
-    elif:
-        return "Ben"
     else:
-        return None
+        return "Ben"
