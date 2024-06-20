@@ -42,6 +42,7 @@ def findPrimesToN(n):
             primes.append(i)
     return primes
 
+
 def isWinner(x, nums):
     """
     Determine the winner of the game for each round.
@@ -55,7 +56,7 @@ def isWinner(x, nums):
              If the winner cannot be determined, returns None.
     """
     if (type(nums) is not list or not all(isinstance(n, int)
-        and n >= 0 for n in nums)):
+       and n >= 0 for n in nums)):
         return None
 
     if type(x) is not int or x != len(nums):
