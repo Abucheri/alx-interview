@@ -28,57 +28,56 @@ def isWinner(x, nums):
         str: Name of the player who won the most rounds ('Maria' or 'Ben').
              If the winner cannot be determined, returns None.
     """
-    if (not isinstance(nums, list) or not all(isinstance(n, int)
-       for n in nums) or not all(n >= 1 for n in nums)):
-        return None
+    def primeGame(n):
+        """
+        Determines the winner of a single round of the Prime Game.
 
-    nums.sort()
-    max_n = nums[-1]
-    primes = findPrimesToN(max_n)
+        Args:
+            n (int): The maximum number of the set of consecutive
+                     ntegers from 1 up to n.
 
-    if primes is None:
-        return None
+        Returns:
+            int: 1 if Maria wins, 2 if Ben wins.
+        """
+        if n < 1:
+            return None
+        if n == 1:
+            return 2
+
+        numbers = list(range(2, n + 1))  # list of numbers from 2 to n
+        player = 1  # Maria starts first
+        prime = 2  # start with the first prime number
+
+        while numbers:
+            for num in numbers[:]:
+                if num % prime == 0:
+                    numbers.remove(num)
+            if not numbers:
+                break
+            if player == 1:
+                player = 2
+            else:
+                player = 1
+            prime = next((p for p in numbers if p > prime), None)
+
+        return 1 if player == 1 else 2
 
     Maria_wins = 0
     Ben_wins = 0
 
+    if x < 1 or x != len(nums):
+        return None
+
     for n in nums:
-        prime_ct = sum(1 for prime in primes if prime <= n)
-        if prime_ct % 2 == 0:
-            Ben_wins += 1
-        else:
+        winner = primeGame(n)
+        if winner == 1:
             Maria_wins += 1
+        elif winner == 2:
+            Ben_wins += 1
 
-    if Maria_wins > Ben_wins:
+    if Maria_wins == Ben_wins:
+        return None
+    elif Maria_wins > Ben_wins:
         return "Maria"
-    elif Ben_wins > Maria_wins:
-        return "Ben"
     else:
-        return None
-
-
-def findPrimesToN(n):
-    """
-    Returns list of primes up to parameter value n, in ascending order.
-
-    Args:
-        n (int): upper bound on list of primes returned
-
-    Return:
-        primes (list): list of primes to n, or
-        None: on failure
-    """
-    if not isinstance(n, int) or n < 2:
-        return None
-
-    primes = []
-    for candidate in range(2, n + 1):
-        prime = True
-        for divisor in range(2, int(candidate**0.5) + 1):
-            if candidate % divisor == 0:
-                prime = False
-                break
-        if prime:
-            primes.append(candidate)
-
-    return primes
+        return "Ben"
