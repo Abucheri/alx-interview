@@ -28,40 +28,6 @@ def isWinner(x, nums):
         str: Name of the player who won the most rounds ('Maria' or 'Ben').
              If the winner cannot be determined, returns None.
     """
-    def primeGame(n):
-        """
-        Determines the winner of a single round of the Prime Game.
-
-        Args:
-            n (int): The maximum number of the set of consecutive
-                     ntegers from 1 up to n.
-
-        Returns:
-            int: 1 if Maria wins, 2 if Ben wins.
-        """
-        if n < 1:
-            return None
-        if n == 1:
-            return 2
-
-        numbers = list(range(2, n + 1))  # list of numbers from 2 to n
-        player = 1  # Maria starts first
-        prime = 2  # start with the first prime number
-
-        while numbers:
-            for num in numbers[:]:
-                if num % prime == 0:
-                    numbers.remove(num)
-            if not numbers:
-                break
-            if player == 1:
-                player = 2
-            else:
-                player = 1
-            prime = next((p for p in numbers if p > prime), None)
-
-        return 1 if player == 1 else 2
-
     Maria_wins = 0
     Ben_wins = 0
 
@@ -69,7 +35,7 @@ def isWinner(x, nums):
         return None
 
     for n in nums:
-        winner = primeGame(n)
+        winner = determine_winner(n)
         if winner == 1:
             Maria_wins += 1
         elif winner == 2:
@@ -79,7 +45,40 @@ def isWinner(x, nums):
         return None
     elif Maria_wins > Ben_wins:
         return "Maria"
-    elif:
-        return "Ben"
     else:
+        return "Ben"
+
+
+def determine_winner(n):
+    """
+    Determines the winner of a single round of the Prime Game.
+
+    Args:
+        n (int): The maximum number of the set of consecutive
+                 integers from 1 up to n.
+
+    Returns:
+        int: 1 if Maria wins, 2 if Ben wins.
+    """
+    if n < 1:
         return None
+    if n == 1:
+        return 2
+
+    numbers = list(range(2, n + 1))  # list of numbers from 2 to n
+    player = 1  # Maria starts first
+    prime = 2  # start with the first prime number
+
+    while numbers:
+        for num in numbers[:]:
+            if num % prime == 0:
+                numbers.remove(num)
+        if not numbers:
+            break
+        if player == 1:
+            player = 2
+        else:
+            player = 1
+        prime = next((p for p in numbers if p > prime), None)
+
+    return 1 if player == 1 else 2
