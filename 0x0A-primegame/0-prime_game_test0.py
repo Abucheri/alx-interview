@@ -30,19 +30,23 @@ def isWinner(x, nums):
     """
     Maria_wins = 0
     Ben_wins = 0
-    if (x < 1 or x != len(nums)):
+
+    if x < 1 or x != len(nums):
         return None
+
     for n in nums:
         winner = determine_winner(n)
         if winner == 1:
             Maria_wins += 1
         elif winner == 2:
             Ben_wins += 1
+
     if Maria_wins == Ben_wins:
         return None
     elif Maria_wins > Ben_wins:
         return "Maria"
-    return "Ben"
+    else:
+        return "Ben"
 
 
 def determine_winner(n):
@@ -56,37 +60,25 @@ def determine_winner(n):
     Returns:
         int: 1 if Maria wins, 2 if Ben wins.
     """
-    if (n < 1):
+    if n < 1:
         return None
-    if (n == 1):
-        return (2)
-    nums = list(range(n + 1))
-    player = 1
-    p = 2
-    primes = []
-    for num in nums:
-        if (num % p == 0):
-            nums.remove(num)
-    primes.append(p)
-    p = 3
-    while (nums != [1]):
-        if (player == 1):
+    if n == 1:
+        return 2
+
+    numbers = list(range(2, n + 1))  # list of numbers from 2 to n
+    player = 1  # Maria starts first
+    prime = 2  # start with the first prime number
+
+    while numbers:
+        for num in numbers[:]:
+            if num % prime == 0:
+                numbers.remove(num)
+        if not numbers:
+            break
+        if player == 1:
             player = 2
         else:
             player = 1
-        for num in nums:
-            if (num % p == 0):
-                nums.remove(num)
-        primes.append(p)
-        p += 2
-        flag = 1
-        while (flag):
-            for num in primes:
-                if (p % num == 0):
-                    p += 2
-                    break
-            else:
-                flag = 0
-    if (player == 1):
-        return 1
-    return 2
+        prime = next((p for p in numbers if p > prime), None)
+
+    return 1 if player == 1 else 2
