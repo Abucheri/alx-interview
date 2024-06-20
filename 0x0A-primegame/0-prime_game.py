@@ -1,18 +1,6 @@
 #!/usr/bin/python3
-"""
-0. Prime Game
+"""(501) 0x22. Prime Game task 0. Prime Game
 
-Module for determining the winner of multiple rounds of the prime game between
-Maria and Ben.
-
-Maria and Ben play a game where they take turns choosing a prime number from a
-set of consecutive integers starting from 1 up to and including n. They remove
-that number and all its multiples from the set. The player who cannot make a
-move loses the game. Maria always goes first, and both play optimally.
-
-Functions:
-- isWinner(x, nums): Determines the winner of each round based on
-the game's rules.
 """
 
 
@@ -31,54 +19,69 @@ def findPrimesToN(n):
     if (type(n) is not int or n < 0):
         return None
 
+    # logically primes should be a set, but we want it to remain ordered
     primes = []
-    for i in range(2, n + 1):
+    for candidate in range(2, n + 1):
         prime = True
-        for divisor in range(2, int(i**0.5) + 1):
-            if (i % divisor == 0):
+        for divisor in range(2, candidate):
+            if (candidate % divisor == 0):
                 prime = False
                 break
         if (prime):
-            primes.append(i)
+            primes.append(candidate)
     return primes
 
 
 def isWinner(x, nums):
-    """
-    Determine the winner of the game for each round.
+    """Simulates a game of primes between Ben and Maria, returns the winner.
+
+    For each round of the game, players are given a set of consecutive integers
+    starting from 1 up to and including n, and take turns choosing a prime
+    number from the set and removing that number and its multiples from the
+    set. The player that cannot make a move loses the game.
 
     Args:
-        x (int): Number of rounds.
-        nums (list): List of integers n for each round.
+        x (int): number of rounds
+        nums (list) of (int): array of n values for each round of the game
 
-    Returns:
-        str: Name of the player who won the most rounds ('Maria' or 'Ben').
-             If the winner cannot be determined, returns None.
+    Return:
+        (str): name of the player that won the most rounds, or
+        (None): on failure or no winner found
+
     """
-    if (type(nums) is not list or not all(isinstance(n, int)
-       and n >= 0 for n in nums)):
+    if (type(nums) is not list or not all([type(n) is int for n in nums]) or
+            not all([n > -1 for n in nums])):
         return None
 
-    if type(x) is not int or x != len(nums):
+    if (type(x) is not int or x != len(nums)):
         return None
 
-    primes = findPrimesToN(max(nums))
-    if primes is None:
+    nums.sort()
+    primes = findPrimesToN(nums[-1])
+    if (primes is None):
         return None
 
     Maria_wins = 0
     Ben_wins = 0
-
     for n in nums:
-        prime_count = sum(1 for prime in primes if prime <= n)
-        if prime_count % 2 == 0:
+        prime_ct = 0
+        for prime in primes:
+            if (prime <= n):
+                prime_ct += 1
+            else:
+                break
+        # Since all multiples of a prime are removed when a player chooses,
+        # primes are the only meaningful strategic units. Therefore if Maria
+        # always goes first, she wins games with an odd number of primes from
+        # 2 to n, and Ben will win games with an even number.
+        if prime_ct % 2 == 0:
             Ben_wins += 1
         else:
             Maria_wins += 1
 
-    if Maria_wins > Ben_wins:
+    if (Maria_wins > Ben_wins):
         return "Maria"
-    elif Ben_wins > Maria_wins:
+    elif (Ben_wins > Maria_wins):
         return "Ben"
     else:
         return None
